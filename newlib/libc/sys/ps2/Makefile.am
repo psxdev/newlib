@@ -8,7 +8,9 @@ AM_CCASFLAGS = $(INCLUDES)
 
 noinst_LIBRARIES = lib.a
 
-lib_a_SOURCES =
+lib_a_SOURCES = dummy_c.c dummy_S.S
+lib_a_CCASFLAGS = $(AM_CCASFLAGS)
+lib_a_CFLAGS = $(AM_CFLAGS)
 
 all-local: crt0.o
 
