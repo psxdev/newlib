@@ -40,9 +40,9 @@
    .text
    .align   2
 
-   .globl  _start
-   .ent    _start
-_start:
+   .globl  __start
+   .ent    __start
+__start:
 
 zerobss:
    # clear bss area
@@ -130,7 +130,7 @@ ctors:
 
    j   _exit      # _exit(retval)
    move   $4, $2
-   .end   _start
+   .end   __start
 
    .align   3
 
