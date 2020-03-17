@@ -1,3 +1,4 @@
+/* FIXME: From sys/sysvi386/sys */
 #ifndef _SYS_DIRENT_H
 # define _SYS_DIRENT_H
 
@@ -7,7 +8,7 @@
  * Sean Eric Fagan, sef@Kithrup.COM
  */
 
-typedef struct _dirdesc {
+typedef struct __dirdesc {
 	int	dd_fd;
 	long	dd_loc;
 	long	dd_size;
@@ -18,19 +19,25 @@ typedef struct _dirdesc {
 
 # define __dirfd(dp)	((dp)->dd_fd)
 
-DIR *opendir (const char *);
-struct dirent *readdir (DIR *);
-void rewinddir (DIR *);
-int closedir (DIR *);
-
 #include <sys/types.h>
 
+#undef  MAXNAMLEN	/* from unistd.h */
+#ifdef __svr4__
+#define MAXNAMLEN	512
+#else
+#define MAXNAMLEN	255
+#endif
+
+#define d_ino	d_fileno	/* compatibility */
+
 struct dirent {
-	long	d_ino;
-	off_t	d_off;
+	off_t		d_off;
+	unsigned long	d_fileno;
 	unsigned short	d_reclen;
-	/* we need better syntax for variable-sized arrays */
-	char	d_name[1];
+	unsigned short	d_namlen;
+	char		d_name[MAXNAMLEN + 1];
 };
+
+/* FIXME: include definition of DIRSIZ() ? */
 
 #endif
